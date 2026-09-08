@@ -104,6 +104,34 @@ média dos valores.
 
 **Resposta:**
 ```csharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ExerciciosVetores01
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            double[] numeros = new double[8];
+            double soma = 0;
+            for (int i = 0; i < numeros.Length; i++)
+            {
+                Console.Write("Digite o " + i + " numero: ");
+                numeros[i] = Convert.ToInt32(Console.ReadLine());
+
+                soma = soma + numeros[i];
+            }
+
+            double resultado = soma / 8;
+
+            Console.WriteLine("Resultado: " +  resultado);
+        }
+    }
+}
 ```
 
 ### 5. Elementos pares e ímpares
