@@ -58,4 +58,39 @@ O programa deve possuir um Menu Interativo com as seguintes opções (usando swi
 # CODIGO:
 
 ```csharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AtividadeMatrizes01
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+
+        }
+
+        public static void menu()
+        {
+            int opc = 0;
+            Console.WriteLine("##########################################");
+            Console.WriteLine("############# ++ Matrix-9 ++ #############");
+            Console.WriteLine("##########################################");
+            Console.WriteLine("1. Criar Jogo Manual");
+            Console.WriteLine("2. Gerar Múltiplos Jogos Aleatórios");
+            Console.WriteLine("3. Visualizar Bilhete de Apostas");
+            Console.WriteLine("4. Sortear e Conferir Bilhete");
+            Console.WriteLine("0. Sair");
+            Console.WriteLine("  ");
+            Console.Write("Digite uma Opção");
+            opc = Convert.ToInt32(Console.ReadLine());
+        }
+    }
+}
+
 ```
