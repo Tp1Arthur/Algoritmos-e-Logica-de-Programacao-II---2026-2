@@ -72,23 +72,252 @@ namespace AtividadeMatrizes01
     {
         static void Main(string[] args)
         {
-
+            menu();
         }
 
         public static void menu()
         {
             int opc = 0;
+
+            List<int[,]> bilhete = new List<int[,]>();
+
+            do
+            {
+                Console.WriteLine("##########################################");
+                Console.WriteLine("############# ++ Matrix-9 ++ #############");
+                Console.WriteLine("##########################################");
+                Console.WriteLine("1. Criar Jogo Manual");
+                Console.WriteLine("2. Gerar Multiplos Jogos Aleatorios");
+                Console.WriteLine("3. Visualizar Bilhete de Apostas");
+                Console.WriteLine("4. Sortear e Conferir Bilhete");
+                Console.WriteLine("0. Sair");
+                Console.WriteLine("  ");
+                Console.Write("Digite uma Opcao: ");
+                opc = Convert.ToInt32(Console.ReadLine());
+
+                switch (opc)
+                {
+                    case 1:
+                    {
+                        int[,] jogo = CriarJogoManual();
+
+                        bilhete.Add(jogo);
+
+                        Console.WriteLine("Jogo adicionado ao bilhete!");
+                        break;
+                    }
+
+                    case 2:
+                    {
+                        Console.Write("Quantos jogos aleatorios voce quer gerar? ");
+                        int quantidade = Convert.ToInt32(Console.ReadLine());
+
+                        for (int i = 0; i < quantidade; i++)
+                        {
+                            int[,] jogo = GerarJogoAleatorio();
+
+                            bilhete.Add(jogo);
+                        }
+
+                        Console.WriteLine($"{quantidade} jogo(s) adicionado(s) ao bilhete!");
+                        break;
+                    }
+
+                    case 3:
+                    {
+                        VisualizarBilhete(bilhete);
+                        break;
+                    }
+
+                    case 4:
+                    {
+                        SortearEConferir(bilhete);
+                        break;
+                    }
+
+                    case 0:
+                    {
+                        Console.WriteLine("Saindo...");
+                        break;
+                    }
+
+                    default:
+                    {
+                        Console.WriteLine("ERRO!!!");
+                        break;
+                    }
+                }
+
+            } while (opc != 0);
+        }
+
+
+        public static int[,] CriarJogoManual()
+        {
+            int[,] jogo = new int[3, 3];
+
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    int numero;
+
+                    do
+                    {
+                        Console.Write($"Digite o numero da posicao [{i},{j}]: ");
+                        numero = Convert.ToInt32(Console.ReadLine());
+
+                        if (numero < 1 || numero > 30 || ExisteNaMatriz(numero, jogo))
+                        {
+                            Console.WriteLine("Numero inválido! Digite um valor entre 1 e 30 e que ainda nao foi utilizado.");
+                        }
+
+                    } while (numero < 1 || numero > 30 || ExisteNaMatriz(numero, jogo));
+
+                    jogo[i, j] = numero;
+                }
+            }
+
+            return jogo;
+        }
+
+
+        public static bool ExisteNaMatriz(int numero, int[,] matriz)
+        {
+            bool achou = false;
+
+            foreach (int elemento in matriz)
+            {
+                if (numero == elemento)
+                    achou = true;
+            }
+
+            return achou;
+        }
+
+
+        public static int[,] GerarJogoAleatorio()
+        {
+            int[,] jogo = new int[3, 3];
+
+            Random r = new Random();
+
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    int numero;
+
+                    do
+                    {
+                        numero = r.Next(1, 31);
+
+                    } while (ExisteNaMatriz(numero, jogo));
+
+                    jogo[i, j] = numero;
+                }
+            }
+
+            return jogo;
+        }
+
+
+        public static void VisualizarBilhete(List<int[,]> bilhete)
+        {
+            if (bilhete.Count == 0)
+            {
+                Console.WriteLine("O bilhete esta vazio!");
+                return;
+            }
+
+            Console.WriteLine("\n##########################################");
+            Console.WriteLine("########## BILHETE DE APOSTAS ###########");
             Console.WriteLine("##########################################");
-            Console.WriteLine("############# ++ Matrix-9 ++ #############");
+
+            for (int k = 0; k < bilhete.Count; k++)
+            {
+                Console.WriteLine($"\n--- Jogo {k + 1} ---");
+
+                for (int i = 0; i < 3; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        Console.Write($"{bilhete[k][i, j],2} | ");
+                    }
+
+                    Console.WriteLine();
+                }
+            }
+        }
+
+
+        public static int[,] SortearNumeros()
+        {
+            int[,] sorteio = new int[3, 3];
+
+            Random r = new Random();
+
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    int numero;
+
+                    do
+                    {
+                        numero = r.Next(1, 31);
+
+                    } while (ExisteNaMatriz(numero, sorteio));
+
+                    sorteio[i, j] = numero;
+                }
+            }
+
+            return sorteio;
+        }
+
+
+        public static void SortearEConferir(List<int[,]> bilhete)
+        {
+            if (bilhete.Count == 0)
+            {
+                Console.WriteLine("O bilhete esta vazio!");
+                return;
+            }
+
+            int[,] sorteio = SortearNumeros();
+
+            Console.WriteLine("\n##########################################");
+            Console.WriteLine("########### SORTEIO OFICIAL #############");
             Console.WriteLine("##########################################");
-            Console.WriteLine("1. Criar Jogo Manual");
-            Console.WriteLine("2. Gerar Múltiplos Jogos Aleatórios");
-            Console.WriteLine("3. Visualizar Bilhete de Apostas");
-            Console.WriteLine("4. Sortear e Conferir Bilhete");
-            Console.WriteLine("0. Sair");
-            Console.WriteLine("  ");
-            Console.Write("Digite uma Opção");
-            opc = Convert.ToInt32(Console.ReadLine());
+
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    Console.Write($"{sorteio[i, j],2} | ");
+                }
+
+                Console.WriteLine();
+            }
+
+
+            Console.WriteLine("\n########### RESULTADOS ##################");
+
+            for (int k = 0; k < bilhete.Count; k++)
+            {
+                int acertos = 0;
+
+                foreach (int elemento in bilhete[k])
+                {
+                    if (ExisteNaMatriz(elemento, sorteio))
+                    {
+                        acertos++;
+                    }
+                }
+
+                Console.WriteLine($"Jogo {k + 1}: {acertos} acertos!");
+            }
         }
     }
 }
